@@ -1,16 +1,20 @@
 package com.bajajfinserv.test.bfh_webhook;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @SpringBootApplication
 public class BfhWebhookApplication {
@@ -65,7 +69,8 @@ public class BfhWebhookApplication {
 
                 HttpHeaders submitHeaders = new HttpHeaders();
                 submitHeaders.setContentType(MediaType.APPLICATION_JSON);
-                submitHeaders.set("Authorization", "Bearer " + accessToken);
+                submitHeaders.set("Authorization", accessToken);   // <-- fixed
+
 
                 HttpEntity<String> submitRequest = new HttpEntity<>(mapper.writeValueAsString(submitBody), submitHeaders);
 
